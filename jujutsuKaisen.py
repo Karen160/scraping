@@ -1,4 +1,3 @@
-from math import inf
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -37,11 +36,14 @@ def get_cara_character(character_name):
 
                 informations = section.find_all(class_="pi-data-value")
                 for information in informations:
-                    information = information.get_text()
-                    print(information)
-                    information = information.replace("(Préquel)", "/")
+                    # On remplace "(Préquel)" par "/" pour la lisibilité de la colonne "Age"
+                    information = information.get_text().replace("(Préquel)", "/")
+                    # On enlève les "[1]"" et "(commentaire)"" car je n'ai pas besoin
                     information = re.sub("[\(\[].*?[\)\]]", "", information)
-                    list_info.append(information)
+                    # On met des espaces entre les mots (exemple : scrapingJujutsu => scraping Jujutsu) 
+                    information = re.sub(r"(\w)([A-Z])", r"\1 \2", information)
+                    # On enlève les espaces en début de phrase grâce au .strip 
+                    list_info.append(information.strip())
     
         for i in range(0, len(list_name)):
             data[list_name[i]] = list_info[i]
@@ -54,6 +56,8 @@ def get_character(soup, limit):
     name_list = list()
     for character in characters:
         name = character.span.get_text()
+        # On ajoute un _ à la place de l'espace entre le nom et le prénom de mon personnage pour me rediriger dans le bon lien de la description du personnage
+        # On enlève le symbole †
         name = name.replace(' ', '_', 1).replace('†', '')
         name_list.append(name)
     return name_list
