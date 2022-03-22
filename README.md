@@ -34,6 +34,7 @@ L'objectif étant de récupérer les informations des personnages du manga Jujut
 4. Lister toutes les informations disponibles sur ses personnages
 5. Affichez ses informations dans le terminal
 6. Générez un document excel récapitulant toutes les informations des personnages sélectionnés
+Pour réaliser ces différentes étapes, j'ai développer diverses fonctions.
 
 ### Les fonctions
 
@@ -42,4 +43,4 @@ Le projet est séparer en 4 fonctions différentes :
 - ```get_character``` qui récupère les noms des personnages disponible sur la page
 - ```get_jujutsu_page``` qui trouve la page comportant les informations détaillés de chaque personnage
 - ```get_cara_character``` qui récupère les informations des personnages
-
+Vous trouverez toutes les étapes de ses fonctions dans le code en commentaire.

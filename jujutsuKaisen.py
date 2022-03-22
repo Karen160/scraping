@@ -27,13 +27,16 @@ def get_cara_character(character_name):
 
     for container in page.find_all('aside', {'class': "portable-infobox"}):
         sections = list(itertools.chain(container.find_all('section', {'class': "pi-group"}, limit=3)))
+        #La liste des noms des champs et la liste des informations correspondant à ceux-ci
         list_name = list()
         list_info = list()
         for section in sections:
             if len(section) > 1:
+                # On ajoute les nouveaux noms de champs à la liste nom
                 for title in section.find_all('h3'):
                     list_name.append(title.get_text())
 
+                # On ajoute les nouvelles informations à la liste info
                 informations = section.find_all(class_="pi-data-value")
                 for information in informations:
                     # On remplace "(Préquel)" par "/" pour la lisibilité de la colonne "Age"
@@ -44,7 +47,8 @@ def get_cara_character(character_name):
                     information = re.sub(r"(\w)([A-Z])", r"\1 \2", information)
                     # On enlève les espaces en début de phrase grâce au .strip 
                     list_info.append(information.strip())
-    
+        
+        # On parcours nos deux listes pour retourner le nom du champs avec ses informations correspondantes
         for i in range(0, len(list_name)):
             data[list_name[i]] = list_info[i]
 
