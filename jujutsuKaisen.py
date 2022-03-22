@@ -44,7 +44,7 @@ def get_cara_character(character_name):
                     # On enlève les "[1]"" et "(commentaire)"" car je n'ai pas besoin
                     information = re.sub("[\(\[].*?[\)\]]", "", information)
                     # On met des espaces entre les mots (exemple : scrapingJujutsu => scraping Jujutsu) 
-                    information = re.sub(r"(\w)([A-Z])", r"\1 \2", information)
+                    information = re.sub(r"(\w)([A-ZÀ-Ö])", r"\1 \2", information)
                     # On enlève les espaces en début de phrase grâce au .strip 
                     list_info.append(information.strip())
         
