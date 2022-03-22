@@ -1,8 +1,10 @@
+from math import inf
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import itertools
 import requests_cache
+import re
 
 # Gère le cache
 requests_cache.install_cache('demo_cache')
@@ -35,7 +37,11 @@ def get_cara_character(character_name):
 
                 informations = section.find_all(class_="pi-data-value")
                 for information in informations:
-                    list_info.append(information.get_text().replace('[1]', ''))
+                    information = information.get_text()
+                    print(information)
+                    information = information.replace("(Préquel)", "/")
+                    information = re.sub("[\(\[].*?[\)\]]", "", information)
+                    list_info.append(information)
     
         for i in range(0, len(list_name)):
             data[list_name[i]] = list_info[i]
