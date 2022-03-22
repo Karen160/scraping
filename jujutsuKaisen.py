@@ -1,4 +1,4 @@
-from numpy import character
+from numpy import NaN, character
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -23,7 +23,7 @@ def get_cara_character(character_name):
     data = {}
 
     for container in page.find_all('aside', {'class': "portable-infobox"}):
-        sections = list(itertools.chain(container.find_all('section', {'class': "pi-group"}, limit=3)))
+        sections = list(itertools.chain(container.find_all('section', {'class': "pi-group"}, limit=2)))
         list_name = list()
         list_info = list()
         for section in sections:
@@ -37,6 +37,7 @@ def get_cara_character(character_name):
     
         for i in range(0, len(list_name)):
             data[list_name[i]] = list_info[i]
+    print(data)
     return data
 
 
@@ -52,11 +53,12 @@ def get_character(soup, limit):
 
 if __name__ == "__main__":
     path = r'https://jujutsu-kaisen.fandom.com/fr/wiki/Liste_des_Personnages'
-    all_character = get_character(get_character_jujutsu_list_page(path), limit= 3)
+    all_character = get_character(get_character_jujutsu_list_page(path), limit= 15)
 
     data_to_export = []
 
     for character in all_character:
         data_to_export.append(get_cara_character(character))
 
-    print(pd.DataFrame(data_to_export))
+    resultats = pd.DataFrame(data_to_export).fillna('indisponible')
+    print(resultats)
